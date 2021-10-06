@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <record id="visit0" model="custom_crm.visit">
+            <field name="name">visita importada</field>
+            <field name="customer">cliente importado</field>
+            <field name="date">2020-01-01</field>
+            <field name="type">p</field>
+            <field name="done">1</field>
+        </record>
+    </data>
+</odoo>
