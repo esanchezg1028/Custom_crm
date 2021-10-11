@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
-# from odoo import http
+from odoo import http
+from odoo.http import Response
+import json
 
+class VisitController(http.Controller):
 
-# class Custom_crm(http.Controller):
-#     @http.route('/custom_crm/visit/', auth='public')
-#     def index(self, **kw):
-#         return "Hello, world"
+    @http.route('/api/visits', auth='public', method=['GET'], csrf=False)
+    def get_visits(self, **kw):
+        try:
+            visits = http.request.env['custom_crm.visit'].sudo().search_read([], ['id', 'name', 'customer', 'done'])
+            res = json.dumps(visits, ensure_ascii=False).encode('utf-8')
+            return Response(res, content_type='application/json;charset=utf-8', status=200)
+        except Exception as e:
+            return Response(json.dumps({'error': str(e)}), content_type='application/json;charset=utf-8', status=505)
 
-#     @http.route('/estanteria/estanteria/objects/', auth='public')
-#     def list(self, **kw):
-#         return http.request.render('estanteria.listing', {
-#             'root': '/estanteria/estanteria',
-#             'objects': http.request.env['estanteria.estanteria'].search([]),
-#         })
+        pass
 
-#     @http.route('/estanteria/estanteria/objects/<model("estanteria.estanteria"):obj>/', auth='public')
-#     def object(self, obj, **kw):
-#         return http.request.render('estanteria.object', {
-#             'object': obj
-#         })
